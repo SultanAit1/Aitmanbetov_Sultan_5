@@ -5,8 +5,12 @@ from products.forms import ProductCreateForm, ReviewCreateForm
 
 # Create your views here.
 
-
 def main(request):
+    if request.method == 'GET':
+        return render(request, 'layouts/index.html')
+
+
+def main_view(request):
     if request.method == 'GET':
         return render(request, 'layouts/index.html')
 
@@ -23,10 +27,6 @@ def products_view(request):
         }
         return render(request, 'products/products.html', context=context)
 
-
-def main_view(request):
-    if request.method == 'GET':
-        return render(request, 'layouts/index.html')
 
 
 def product_detail_view(request, id):
@@ -55,7 +55,6 @@ def product_detail_view(request, id):
             'reviews': reviews,
             'form': form
         })
-
 
 
 def categories_view(request):
