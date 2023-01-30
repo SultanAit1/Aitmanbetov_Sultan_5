@@ -19,8 +19,12 @@ from django.urls import path
 from products.views import main, products_view, main_view, \
     product_detail_view, categories_view, create_product_view
 
+from users.views import \
+    login_view, register_view, logout_view
+
 from django.conf.urls.static import static
 from InternetShop.settings import MEDIA_URL, MEDIA_ROOT
+
 
 urlpatterns = [
     path('', main),
@@ -29,7 +33,13 @@ urlpatterns = [
     path('main_view/', main_view),
     path('products/<int:id>/', product_detail_view),
     path('categories/', categories_view),
-    path('products/create/', create_product_view)
+    path('products/create/', create_product_view),
+
+    #users
+
+    path('users/login/', login_view),
+    path('users/logout/', logout_view),
+    path('users/register/', register_view),
 
 ]
 

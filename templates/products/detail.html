@@ -2,41 +2,51 @@
 
 {% block content %}
     <style type="text/css">
-        .post {
+        .product{
             width: 80%;
             margin-left: 10%;
         }
-        .dates {
+        .dates{
             display: flex;
             justify-content: space-between;
         }
-        .comment{
+        .reviews {
             margin-top: 20px;
         }
-        .comment{
-            background: darkcyan;
-            color: chocolate;
+        .review {
+            background: black;
+            color: burlywood;
             padding: 10px;
             margin-bottom: 20px;
         }
-        .post > img {
-            width: 100%;
+        .product > img{
+            width: 15%;
         }
+
     </style>
-    <div class="post">
-        <img src="/media/{{ post.image }}" alt="">
-        <h1>{{ post.title }}</h1>
-        <h4>{{ post.description }}</h4>
-        <h4>Rate: {{ post.rate }}</h4>
+    <div class="product">
+        <img src="/media/{{ product.image }}" alt="">
+    <h5>{{ product.author }}</h5>
+        <h1>{{ product.title }}</h1>
+        <h4>{{ product.description }}</h4>
+        <h4>Rate: {{ product.rate }}</h4>
         <div class="dates">
-            <h5>{{ post.created_date }}</h5>
-            <h5>{{ post.modified_date }}</h5>
+            <h5>{{ product.created_date }}</h5>
+            <h5>{{ product.modified_date }}</h5>
         </div>
-        <div class="comment">
-            {% for comment in comments %}
-                <div class="comment">
-                    <h6>{{ comment.text }}</h6>
-                    <p>{{ comment.created_date }}</p>
+        <div class="create_review">
+            <form action="/products/{{ product.id }}/" method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <input type="submit" value="Add Review">
+            </form>
+        </div>
+        <div class="reviews">
+            {% for review in reviews %}
+                <div class="review">
+                    <h5>{{ review.author.username }}</h5>
+                    <h6>{{ review.title }}</h6>
+                    <p>{{ review.characteristics }}</p>
                 </div>
             {% endfor %}
         </div>
