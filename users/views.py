@@ -26,7 +26,7 @@ def login_view(request):
                 login(request, user)
                 return redirect('/products')
             else:
-                form.add_error('username', 'Неправильный логин или пароль')
+                form.add_error('username', 'error')
 
         return render(request, 'users/login.html', context={
             'form': form
@@ -57,7 +57,7 @@ def register_view(request):
                 )
                 return redirect('/users/login/')
             else:
-                form.add_error('password1', 'Пароли не совпадают')
+                form.add_error('password1', 'password1 != password2')
 
         return render(request, 'users/register.html', context={
             'form': form

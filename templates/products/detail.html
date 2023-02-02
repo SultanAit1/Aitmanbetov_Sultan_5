@@ -6,10 +6,11 @@
             width: 80%;
             margin-left: 10%;
         }
-        .dates{
+        .date {
             display: flex;
             justify-content: space-between;
         }
+
         .reviews {
             margin-top: 20px;
         }
@@ -30,10 +31,12 @@
         <h1>{{ product.title }}</h1>
         <h4>{{ product.description }}</h4>
         <h4>Rate: {{ product.rate }}</h4>
-        <div class="dates">
-            <h5>{{ product.created_date }}</h5>
-            <h5>{{ product.modified_date }}</h5>
-        </div>
+
+      <div class="date">
+        <h5>{{ product.created_date }}</h5>
+        <h5>{{ product.modified_date }}</h5>
+     </div>
+
         <div class="create_review">
             <form action="/products/{{ product.id }}/" method="post">
                 {% csrf_token %}

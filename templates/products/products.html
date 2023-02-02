@@ -6,15 +6,16 @@
 {% endblock %}
 
 {% block content %}
-    <style type="text/css">
-        .categories {
-            width: 50%;
-            margin-left: 10%;
-        }
-    </style>
+        <form action="/products" method="get">
+            <label>
+                <input type="text" name="search">
+            </label>
+            <input type="submit" value="Search">
+        </form>
 
 
-    <div class="products">
+
+    <div class="product">
         {% for product in products %}
             <div class="card" style="width: 18rem;">
                 <div class="card-body">
@@ -27,8 +28,15 @@
                     <h6 class="card-title">{{ product.price }}</h6>
                     <a href="/products/{{ product.id }}" class="card-link">More</a>
                 </div>
-            </div>
+          </div>
         {% endfor %}
     </div>
+        <div class="pages">
+            {% for page in max_page %}
+                <a href="/products/?page={{ page }}">
+                    <button>{{ page }}</button>
+                </a>
+            {% endfor %}
+        </div>
 
 {% endblock %}
