@@ -1,20 +1,23 @@
-
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, logout, login
 from users.forms import LoginForm, RegisterForm
 from django.contrib.auth.models import User
+from django.views.generic import ListView, RedirectView, CreateView
 
 
 # Create your views here.
 
-def login_view(request):
-    if request.method == 'GET':
+
+class LoginView(ListView, CreateView):
+    template_name = 'users/login.html'
+
+    def get(self, request, **kwargs):
         context = {
             'form': LoginForm
         }
-        return render(request, 'users/login.html', context=context)
+        return render(request, self.template_name, context=context)
 
-    if request.method == 'POST':
+    def post(self, request, *args, **kwargs):
         form = LoginForm(data=request.POST)
 
         if form.is_valid():
@@ -26,26 +29,29 @@ def login_view(request):
                 login(request, user)
                 return redirect('/products')
             else:
-                form.add_error('username', 'error')
+                form.add_error('username', '404: password or username')
 
         return render(request, 'users/login.html', context={
             'form': form
         })
 
 
-def logout_view(request):
-    logout(request)
-    return redirect('/products/')
+class LogoutView(RedirectView):
+    def get(self, request, *args, **kwargs):
+        logout(request)
+        return redirect('/products/')
 
 
-def register_view(request):
-    if request.method == 'GET':
+class RegisterView(ListView, CreateView):
+    template_name = 'users/register.html'
+
+    def get(self, request, *args, **kwargs):
         context = {
             'form': RegisterForm
         }
         return render(request, 'users/register.html', context=context)
 
-    if request.method == 'POST':
+    def post(self, request, *args, **kwargs):
         form = RegisterForm(data=request.POST)
 
         if form.is_valid():
@@ -57,7 +63,7 @@ def register_view(request):
                 )
                 return redirect('/users/login/')
             else:
-                form.add_error('password1', 'password1 != password2')
+                form.add_error('password1', 'Password1 != password2')
 
         return render(request, 'users/register.html', context={
             'form': form
